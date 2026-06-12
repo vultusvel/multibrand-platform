@@ -1,0 +1,373 @@
+/* =========================================================================
+   Design system — Group UI Kit (wilko / Homebase / Bathstore) + The Range type.
+   Shared by the app (apps/web) and Storybook. Consumers must prefix with
+   `@import 'tailwindcss';` before importing this file.
+   ========================================================================= */
+
+/* Scan this library's source for Tailwind class usage */
+@source '..';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* =========================================================================
+   Design tokens — Group UI Kit (wilko / Homebase / Bathstore)
+   `@theme inline` makes utilities (bg-brand-primary, p-xl, text-xxl, ...)
+   reference CSS variables, so a brand class on a parent re-themes everything.
+   ========================================================================= */
+@theme inline {
+  /* --- Brand (re-themed per brand below) --- */
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
+
+  /* --- Semantic UI (shared across brands) --- */
+  --color-blue-bg: var(--blue-bg);
+  --color-blue-border: var(--blue-border);
+  --color-blue-utility: var(--blue-utility);
+  --color-blue-text: var(--blue-text);
+  --color-green-bg: var(--green-bg);
+  --color-green-border: var(--green-border);
+  --color-green-utility: var(--green-utility);
+  --color-green-text: var(--green-text);
+  --color-amber-bg: var(--amber-bg);
+  --color-amber-border: var(--amber-border);
+  --color-amber-utility: var(--amber-utility);
+  --color-amber-text: var(--amber-text);
+  --color-red-bg: var(--red-bg);
+  --color-red-border: var(--red-border);
+  --color-red-utility: var(--red-utility);
+  --color-red-text: var(--red-text);
+
+  /* --- Neutral UI (Grey 1–7) --- */
+  --color-grey-1: var(--grey-1);
+  --color-grey-2: var(--grey-2);
+  --color-grey-3: var(--grey-3);
+  --color-grey-4: var(--grey-4);
+  --color-grey-5: var(--grey-5);
+  --color-grey-6: var(--grey-6);
+  --color-grey-7: var(--grey-7);
+
+  /* --- Spacing scale (named: p-xs, gap-l, m-massive, ...).
+     The small 4/8/12px steps map to Tailwind's default p-1 / p-2 / p-3. --- */
+  --spacing-xs: 16px;
+  --spacing-s: 24px;
+  --spacing-m: 32px;
+  --spacing-l: 48px;
+  --spacing-xl: 64px;
+  --spacing-xxl: 80px;
+  --spacing-massive: 96px;
+
+  /* --- Breakpoints: S <768 / M 768–991 / L 992–1199 / XL 1200+ --- */
+  --breakpoint-m: 768px;
+  --breakpoint-l: 992px;
+  --breakpoint-xl: 1200px;
+
+  /* --- Font family: Lato (loaded via next/font, exposed as --font-lato) --- */
+  --font-sans: var(--font-lato), ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* -------- Brand themes: apply `.theme-{brand}` on a parent (html) -------- */
+/* wilko is the default brand (also set on :root) */
+:root,
+.theme-wilko {
+  --brand-primary: #9d0d26;
+  --brand-secondary: #f6da24;
+}
+
+.theme-homebase {
+  --brand-primary: #008c49;
+  --brand-secondary: #ef7d24;
+}
+
+.theme-bathstore {
+  --brand-primary: #6f2ac0;
+  --brand-secondary: #1a1a1a;
+}
+
+/* -------- Shared semantic + neutral palette (TODO: confirm hexes) -------- */
+:root {
+  /* Blue */
+  --blue-bg: #d9eefb;
+  --blue-border: #a8d4ef;
+  --blue-utility: #1d6fb8;
+  --blue-text: #0b3d6b;
+  /* Green */
+  --green-bg: #e3f3e8;
+  --green-border: #aee0bf;
+  --green-utility: #1f8a4c;
+  --green-text: #0f5a30;
+  /* Amber */
+  --amber-bg: #fbf3d9;
+  --amber-border: #efd9a8;
+  --amber-utility: #b87a1d;
+  --amber-text: #6b4a0b;
+  /* Red */
+  --red-bg: #fbe0e0;
+  --red-border: #efa8a8;
+  --red-utility: #c0392b;
+  --red-text: #7a1f1f;
+  /* Neutral UI greys */
+  --grey-1: #f2f2f2;
+  --grey-2: #e0e0e0;
+  --grey-3: #c2c2c2;
+  --grey-4: #a0a0a0;
+  --grey-5: #6b6b6b;
+  --grey-6: #404040;
+  --grey-7: #1a1a1a;
+}
+
+/* =========================================================================
+   Typography scale — The Range (Lato). Global across all brands.
+   Responsive: mobile-first base, desktop overrides at >=768px (--breakpoint-m).
+   NOTE: "Semi Bold" (600) is mapped to 700 because Google Lato has no 600.
+   ========================================================================= */
+@layer components {
+  /* ---- Headings (Bold / 700) ---- */
+  .t-hero {
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 700;
+  }
+  .t-h1 {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 700;
+  }
+  .t-h2 {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 700;
+  }
+  .t-h3 {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 700;
+  }
+  .t-h4 {
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 700;
+  }
+  .t-h5 {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+  }
+
+  /* ---- Body (Regular 400 / "Semi Bold" -> 700). letter-spacing -0.2px ---- */
+  .t-body-xl,
+  .t-body-xl-bold {
+    font-size: 18px;
+    line-height: 26px;
+    letter-spacing: -0.2px;
+  }
+  .t-body-l,
+  .t-body-l-bold {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.2px;
+  }
+  .t-body-m,
+  .t-body-m-bold {
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: -0.2px;
+  }
+  .t-body-s,
+  .t-body-s-bold {
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: -0.2px;
+  }
+  .t-body-xs,
+  .t-body-xs-bold {
+    font-size: 10px;
+    line-height: 14px;
+    letter-spacing: -0.2px;
+  }
+  .t-body-xl,
+  .t-body-l,
+  .t-body-m,
+  .t-body-s,
+  .t-body-xs {
+    font-weight: 400;
+  }
+  .t-body-xl-bold,
+  .t-body-l-bold,
+  .t-body-m-bold,
+  .t-body-s-bold,
+  .t-body-xs-bold {
+    font-weight: 700; /* design = Semi Bold (600); Lato has no 600 */
+  }
+
+  /* ---- Links (Bold / 700, underline on hover). letter-spacing -0.2px ---- */
+  .t-link-l,
+  .t-link-m,
+  .t-link-s {
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    text-decoration: none;
+  }
+  .t-link-l:hover,
+  .t-link-m:hover,
+  .t-link-s:hover {
+    text-decoration: underline;
+  }
+  .t-link-l {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .t-link-m {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .t-link-s {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  /* ---------------- Desktop overrides (>= 768px) ---------------- */
+  @media (min-width: 768px) {
+    .t-hero {
+      font-size: 40px;
+      line-height: 48px;
+    }
+    .t-h1 {
+      font-size: 32px;
+      line-height: 40px;
+    }
+    .t-h2 {
+      font-size: 24px;
+      line-height: 32px;
+    }
+    .t-h3 {
+      font-size: 20px;
+      line-height: 24px;
+    }
+    .t-h4 {
+      font-size: 18px;
+      line-height: 24px;
+    }
+    .t-h5 {
+      font-size: 16px;
+      line-height: 20px;
+    }
+    .t-body-xl,
+    .t-body-xl-bold {
+      font-size: 20px;
+      line-height: 28px;
+    }
+    .t-body-l,
+    .t-body-l-bold {
+      font-size: 18px;
+      line-height: 26px;
+    }
+    .t-body-m,
+    .t-body-m-bold {
+      font-size: 16px;
+      line-height: 24px;
+    }
+    .t-body-s,
+    .t-body-s-bold {
+      font-size: 14px;
+      line-height: 20px;
+    }
+    .t-body-xs,
+    .t-body-xs-bold {
+      font-size: 12px;
+      line-height: 16px;
+    }
+    .t-link-l {
+      font-size: 18px;
+      line-height: 26px;
+    }
+    .t-link-m {
+      font-size: 16px;
+      line-height: 24px;
+    }
+    .t-link-s {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  tab-size: 4;
+  scroll-behavior: smooth;
+}
+body {
+  font-family: inherit;
+  line-height: inherit;
+  margin: 0;
+}
+h1,
+h2,
+p,
+pre {
+  margin: 0;
+}
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: currentColor;
+}
+h1,
+h2 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+pre {
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    Liberation Mono,
+    Courier New,
+    monospace;
+}
+svg {
+  display: block;
+  vertical-align: middle;
+  shape-rendering: auto;
+  text-rendering: optimizeLegibility;
+}
+pre {
+  background-color: rgba(55, 65, 81, 1);
+  border-radius: 0.25rem;
+  color: rgba(229, 231, 235, 1);
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    Liberation Mono,
+    Courier New,
+    monospace;
+  overflow: scroll;
+  padding: 0.5rem 0.75rem;
+}
+
+.shadow {
+  box-shadow:
+    0 0 #0000,
+    0 0 #0000,
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+.rounded {
+  border-radius: 1.5rem;
+}

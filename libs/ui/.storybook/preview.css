@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+@import '../src/styles/theme.css';
+
+:root {
+  --font-lato: 'Lato';
+}
