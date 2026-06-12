@@ -1,4 +1,4 @@
-import { Button } from '@wilko-platform/ui';
+import { Button } from '@multibrand-platform/ui';
 
 import styles from './page.module.css';
 
@@ -10,11 +10,11 @@ export default function Index() {
           <div id="welcome">
             <h1>
               <span> Hello there, </span>
-              Welcome @wilko-platform/web 👋
+              Welcome @multibrand-platform/web 👋
             </h1>
             <p className="t-body-l" style={{ marginTop: 16 }}>
               Shared component from{' '}
-              <code>@wilko-platform/ui</code>:
+              <code>@multibrand-platform/ui</code>:
             </p>
             <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
               <Button>Primary</Button>
@@ -402,7 +402,7 @@ export default function Index() {
                 </svg>
                 View project details
               </summary>
-              <pre>nx show project @wilko-platform/web --web</pre>
+              <pre>nx show project @multibrand-platform/web --web</pre>
             </details>
             <details>
               <summary>

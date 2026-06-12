@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import '@wilko-platform/ui/theme.css';
+@import '@multibrand-platform/ui/theme.css';
 
 .wrapper {
   width: 100%;

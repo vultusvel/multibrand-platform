@@ -7,7 +7,7 @@ const { composePlugins, withNx } = require('@nx/next');
 const nextConfig = {
   nx: {},
   // Transpile workspace libraries that ship raw TS/TSX (via package.json exports)
-  transpilePackages: ['@wilko-platform/ui'],
+  transpilePackages: ['@multibrand-platform/ui'],
 };
 
 const plugins = [

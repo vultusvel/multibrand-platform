@@ -1,8 +1,8 @@
-# @wilko-platform/ui
+# @multibrand-platform/ui
 
 The shared **design system** for the Wilko Platform: React components, design
 tokens (colours, brand themes, typography) and the Storybook used to develop and
-showcase them. Consumed by the apps via `import { Button } from '@wilko-platform/ui'`.
+showcase them. Consumed by the apps via `import { Button } from '@multibrand-platform/ui'`.
 
 ## What's inside
 
@@ -82,7 +82,7 @@ npx nx test ui -- --project=ui --watch
 ## Design tokens & theming
 
 `src/styles/theme.css` defines the design system and is shared with the app
-(imported there via `@wilko-platform/ui/theme.css`).
+(imported there via `@multibrand-platform/ui/theme.css`).
 
 - **Brands:** `theme-wilko` (default), `theme-homebase`, `theme-bathstore` —
   set the class on a parent element; utilities like `bg-brand-primary` follow.
@@ -94,7 +94,7 @@ npx nx test ui -- --project=ui --watch
 
 1. Create `src/lib/<name>/<name>.tsx` + `<name>.stories.tsx` + `<name>.spec.tsx`.
 2. Export it from `src/index.ts`.
-3. Use it: `import { X } from '@wilko-platform/ui'`. It shows up in Storybook and
+3. Use it: `import { X } from '@multibrand-platform/ui'`. It shows up in Storybook and
    runs as a test automatically.
 
 ---

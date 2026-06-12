@@ -1,4 +1,4 @@
-# Wilko Platform
+# Multibrand Platform
 
 A multi-brand retail platform built as an [Nx](https://nx.dev) monorepo. A single
 shared UI library powers multiple brands (**wilko**, **Homebase**, **Bathstore**)
@@ -52,7 +52,7 @@ npm install
 │       └── public/              # static assets (brand logos, icons, payment, media)
 │
 ├── libs/
-│   └── ui/                      # @wilko-platform/ui — the design system
+│   └── ui/                      # @multibrand-platform/ui — the design system
 │       ├── .storybook/          # Storybook config (lives with the components)
 │       └── src/
 │           ├── styles/
@@ -65,8 +65,8 @@ npm install
 └── vitest.workspace.ts          # Vitest projects discovery
 ```
 
-**Two projects:** `@wilko-platform/web` (app) and `ui` (library).
-The app consumes the library via `import { Button } from '@wilko-platform/ui'`.
+**Two projects:** `@multibrand-platform/web` (app) and `ui` (library).
+The app consumes the library via `import { Button } from '@multibrand-platform/ui'`.
 
 ---
 
@@ -74,12 +74,12 @@ The app consumes the library via `import { Button } from '@wilko-platform/ui'`.
 
 Run from the repo root.
 
-### App (`@wilko-platform/web`)
+### App (`@multibrand-platform/web`)
 
 ```bash
-npx nx dev   @wilko-platform/web      # dev server (Next.js)
-npx nx build @wilko-platform/web      # production build (Next.js)
-npx nx start @wilko-platform/web      # serve the production build
+npx nx dev   @multibrand-platform/web      # dev server (Next.js)
+npx nx build @multibrand-platform/web      # production build (Next.js)
+npx nx start @multibrand-platform/web      # serve the production build
 ```
 
 ### Storybook (lives in the `ui` library)
@@ -93,7 +93,7 @@ npx nx build-storybook ui             # static build
 
 ```bash
 npx nx test ui                        # unit tests + stories run as tests
-npx nx test @wilko-platform/web       # app unit tests
+npx nx test @multibrand-platform/web       # app unit tests
 npx nx run-many -t test               # everything
 ```
 
@@ -158,7 +158,7 @@ Tokens are defined in [`libs/ui/src/styles/theme.css`](libs/ui/src/styles/theme.
    libs/ui/src/lib/<name>/<name>.spec.tsx
    ```
 2. Export it from [`libs/ui/src/index.ts`](libs/ui/src/index.ts).
-3. Use it anywhere: `import { X } from '@wilko-platform/ui'`.
+3. Use it anywhere: `import { X } from '@multibrand-platform/ui'`.
 4. It appears automatically in Storybook and runs as a test.
 
 ---
@@ -171,8 +171,8 @@ Tokens are defined in [`libs/ui/src/styles/theme.css`](libs/ui/src/styles/theme.
   `@storybook/react-vite`; faster than webpack.
 - **Design system → `libs/ui`.** Components, design tokens (`theme.css`) and the
   Storybook config all live with the library. The app imports tokens via the
-  package export `@wilko-platform/ui/theme.css` and components via
-  `@wilko-platform/ui`. Next transpiles the raw-TS library via
+  package export `@multibrand-platform/ui/theme.css` and components via
+  `@multibrand-platform/ui`. Next transpiles the raw-TS library via
   `transpilePackages`.
 - **Tailwind v4** runs through `@tailwindcss/postcss` in the app (Next) and
   through `@tailwindcss/vite` in Storybook (Vite resolves `@import` before
