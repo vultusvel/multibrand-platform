@@ -84,6 +84,39 @@
   --brand-secondary: #1a1a1a;
 }
 
+.theme-the-range {
+  /* Primary */
+  --brand-primary: #f53e24;    
+  --brand-primary-aa: #e52488; 
+  --brand-blue: #2a2c6b;       
+
+  /* Secondary blues */
+  --brand-bright-blue: #3d68c2;
+  --brand-mid-blue: #5178a4;   
+  --brand-blue-hover: #2d2f88; 
+  --brand-blue-pressed: #1e2051
+
+  /* Validation */
+  --brand-green: #178728;      
+  --brand-red: #ec1818;        
+  --brand-yellow: #ffb514;     
+
+  /* Base (neutral scale) */
+  --brand-base-100: #292737;    
+  --brand-base-80: #585666;       
+  --brand-base-60: #6a7590;       
+  --brand-base-40: #cbd2e8;        
+  --brand-base-20: #edf8f7;       
+  --brand-base-10: #edf0f7;      
+
+  /* Accent */
+  --brand-accent-green: #2edb48;  
+
+  /* Dividers */
+  --brand-divider-40: #cbd2e8;
+  --brand-divider-20: #edf8f7;
+}
+
 /* -------- Shared semantic + neutral palette (TODO: confirm hexes) -------- */
 :root {
   /* Blue */
