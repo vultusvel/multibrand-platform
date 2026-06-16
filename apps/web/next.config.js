@@ -5,8 +5,10 @@ const { composePlugins, withNx } = require('@nx/next');
  */
 
 const nextConfig = {
+  experimental: {
+    viewTransition: true,
+  },
   nx: {},
-  // Transpile workspace libraries that ship raw TS/TSX (via package.json exports)
   transpilePackages: ['@multibrand-platform/ui'],
 };
 

@@ -2,7 +2,10 @@
   "name": "@multibrand-platform/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "dev": "npm run dev --workspace=apps/web",
+    "build": "npm run build --workspace=apps/web"
+  },
   "private": true,
   "engines": {
     "node": ">=24"
