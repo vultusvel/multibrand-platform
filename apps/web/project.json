@@ -1,0 +1,12 @@
+{
+  "name": "@multibrand-platform/web",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "next:build"
+    },
+    "dev": {
+      "executor": "next:dev"
+    }
+  }
+}
