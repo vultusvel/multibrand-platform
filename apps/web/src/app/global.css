@@ -1,17 +1,95 @@
 @import 'tailwindcss';
 @import '@multibrand-platform/ui/theme.css';
 
-@keyframes fade-in {
-  from { opacity: 0; }
+@keyframes vt-fade {
+  from { opacity: 0; filter: blur(3px); }
+  to   { opacity: 1; filter: blur(0); }
 }
-@keyframes fade-out {
-  to { opacity: 0; }
+@keyframes vt-slide-y {
+  from { transform: translateY(10px); }
+  to   { transform: translateY(0); }
 }
+@keyframes vt-slide-x {
+  from { translate: var(--slide-offset, 60px); }
+  to   { translate: 0; }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* --- Durations --- */
+:root {
+  --vt-exit: 150ms;
+  --vt-enter: 210ms;
+}
+
+/* --- Default root fade (fallback for untagged navigations) --- */
 ::view-transition-old(root) {
-  animation: 300ms ease fade-out;
+  animation: var(--vt-exit) ease both vt-fade reverse;
 }
 ::view-transition-new(root) {
-  animation: 300ms ease fade-in;
+  animation: var(--vt-enter) ease var(--vt-exit) both vt-fade;
+}
+
+/* --- Suspense reveal: skeleton slides down, content slides up --- */
+::view-transition-old(.slide-down) {
+  animation:
+    var(--vt-exit) ease-out both vt-fade reverse,
+    var(--vt-exit) ease-out both vt-slide-y reverse;
+}
+::view-transition-new(.slide-up) {
+  animation:
+    var(--vt-enter) ease-in var(--vt-exit) both vt-fade,
+    400ms ease-in both vt-slide-y;
+}
+
+/* --- Directional navigation: forward slides left, back slides right --- */
+/* Triggered by NavLink stamping data-vt on <html> before navigation.     */
+:root[data-vt="nav-forward"]::view-transition-old(root) {
+  --slide-offset: -60px;
+  animation:
+    var(--vt-exit) ease-in both vt-fade reverse,
+    400ms ease-in-out both vt-slide-x reverse;
+}
+:root[data-vt="nav-forward"]::view-transition-new(root) {
+  --slide-offset: 60px;
+  animation:
+    var(--vt-enter) ease-out var(--vt-exit) both vt-fade,
+    400ms ease-in-out both vt-slide-x;
+}
+:root[data-vt="nav-back"]::view-transition-old(root) {
+  --slide-offset: 60px;
+  animation:
+    var(--vt-exit) ease-in both vt-fade reverse,
+    400ms ease-in-out both vt-slide-x reverse;
+}
+:root[data-vt="nav-back"]::view-transition-new(root) {
+  --slide-offset: -60px;
+  animation:
+    var(--vt-enter) ease-out var(--vt-exit) both vt-fade,
+    400ms ease-in-out both vt-slide-x;
+}
+
+/* --- Morph: shared element customization --- */
+::view-transition-group(.morph) {
+  animation-duration: 400ms;
+}
+::view-transition-image-pair(.morph) {
+  animation-name: via-blur;
+}
+@keyframes via-blur {
+  30% { filter: blur(3px); }
+}
+
+/* --- Reduced motion: disable all positional animations --- */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
 }
 
 .wrapper {
