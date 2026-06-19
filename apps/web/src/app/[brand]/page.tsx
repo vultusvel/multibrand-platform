@@ -16,7 +16,7 @@ const brands: Record<string, { name: string; primary: string; secondary: string;
   },
   bathstore: {
     name: 'Bathstore',
-    primary: '#6f2ac0',
+    primary: '#0DA0CC',
     secondary: '#1a1a1a',
     description: 'Beautiful bathrooms for every home.',
   },

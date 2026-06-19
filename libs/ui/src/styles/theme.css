@@ -37,6 +37,20 @@
   --color-red-utility: var(--red-utility);
   --color-red-text: var(--red-text);
 
+  /* --- Status (per-brand) --- */
+  --color-status-new: var(--status-new);
+  --color-status-ratings: var(--status-ratings);
+  --color-status-sale: var(--status-sale);
+
+  /* --- Third party --- */
+  --color-clearpay-mint: var(--clearpay-mint);
+  --color-clearpay-black: var(--clearpay-black);
+  --color-klarna-pink: var(--klarna-pink);
+  --color-klarna-black: var(--klarna-black);
+  --color-paypal-blue: var(--paypal-blue);
+  --color-paypal-light-blue: var(--paypal-light-blue);
+  --color-paypal-black: var(--paypal-black);
+
   /* --- Neutral UI (Grey 1–7) --- */
   --color-grey-1: var(--grey-1);
   --color-grey-2: var(--grey-2);
@@ -46,8 +60,10 @@
   --color-grey-6: var(--grey-6);
   --color-grey-7: var(--grey-7);
 
-  /* --- Spacing scale (named: p-xs, gap-l, m-massive, ...).
-     The small 4/8/12px steps map to Tailwind's default p-1 / p-2 / p-3. --- */
+  /* --- Spacing scale (named: p-xs, gap-l, m-massive, ...) --- */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
   --spacing-xs: 16px;
   --spacing-s: 24px;
   --spacing-m: 32px;
@@ -70,18 +86,27 @@
 /* wilko is the default brand (also set on :root) */
 :root,
 .theme-wilko {
-  --brand-primary: #9d0d26;
-  --brand-secondary: #f6da24;
+  --brand-primary: #9d2235;
+  --brand-secondary: #fdda24;
+  --status-new: #67a239;
+  --status-ratings: #f68d00;
+  --status-sale: #e41222;
 }
 
 .theme-homebase {
-  --brand-primary: #008c49;
-  --brand-secondary: #ef7d24;
+  --brand-primary: #089c49;
+  --brand-secondary: #ec7224;
+  --status-new: #fb610b;
+  --status-ratings: #fb610b;
+  --status-sale: #ee0000;
 }
 
 .theme-bathstore {
-  --brand-primary: #6f2ac0;
-  --brand-secondary: #1a1a1a;
+  --brand-primary: #0DA0CC;
+  --brand-secondary: #2d2d2d;
+  --status-new: #76b82a;
+  --status-ratings: #2d2d2d;
+  --status-sale: #b5193a;
 }
 
 .theme-the-range {
@@ -93,7 +118,7 @@
   /* Secondary blues */
   --brand-bright-blue: #3d68c2;
   --brand-mid-blue: #5178a4;   
-  --brand-blue-hover: #2d2f88; 
+  --brand-blue-hover: #202f88;
   --brand-blue-pressed: #1e2051
 
   /* Validation */
@@ -117,36 +142,47 @@
   --brand-divider-20: #edf8f7;
 }
 
-/* -------- Shared semantic + neutral palette (TODO: confirm hexes) -------- */
+/* -------- Third party brand colours (shared across all brands) -------- */
+:root {
+  --clearpay-mint: #b2fce4;
+  --clearpay-black: #000000;
+  --klarna-pink: #ffa8cd;
+  --klarna-black: #0b051d;
+  --paypal-blue: #002991;
+  --paypal-light-blue: #60cdff;
+  --paypal-black: #000000;
+}
+
+/* -------- Shared semantic + neutral palette -------- */
 :root {
   /* Blue */
-  --blue-bg: #d9eefb;
-  --blue-border: #a8d4ef;
-  --blue-utility: #1d6fb8;
-  --blue-text: #0b3d6b;
+  --blue-bg: #f3f4ff;
+  --blue-border: #d9e1f4;
+  --blue-utility: #5d67b6;
+  --blue-text: #2b347f;
   /* Green */
-  --green-bg: #e3f3e8;
-  --green-border: #aee0bf;
-  --green-utility: #1f8a4c;
-  --green-text: #0f5a30;
+  --green-bg: #d4ffd6;
+  --green-border: #adf78d;
+  --green-utility: #1d8634;
+  --green-text: #155d25;
   /* Amber */
-  --amber-bg: #fbf3d9;
-  --amber-border: #efd9a8;
-  --amber-utility: #b87a1d;
-  --amber-text: #6b4a0b;
+  --amber-bg: #fffadf;
+  --amber-border: #f6ebb2;
+  --amber-utility: #874d23;
+  --amber-text: #652e26;
   /* Red */
-  --red-bg: #fbe0e0;
-  --red-border: #efa8a8;
-  --red-utility: #c0392b;
-  --red-text: #7a1f1f;
+  --red-bg: #ffeef1;
+  --red-border: #ffbebe;
+  --red-utility: #b90d0d;
+  --red-text: #810808;
   /* Neutral UI greys */
-  --grey-1: #f2f2f2;
-  --grey-2: #e0e0e0;
-  --grey-3: #c2c2c2;
-  --grey-4: #a0a0a0;
-  --grey-5: #6b6b6b;
-  --grey-6: #404040;
-  --grey-7: #1a1a1a;
+  --grey-1: #f4f4f4;
+  --grey-2: #e6e6e6;
+  --grey-3: #d9d9d9;
+  --grey-4: #cccccc;
+  --grey-5: #888888;
+  --grey-6: #666666;
+  --grey-7: #333333;
 }
 
 /* =========================================================================

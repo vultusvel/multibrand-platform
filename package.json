@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "npm run dev --workspace=apps/web",
-    "build": "npm run build --workspace=apps/web"
+    "dev": "npx nx dev @multibrand-platform/web",
+    "build": "npx nx build @multibrand-platform/web",
+    "storybook": "npx nx storybook ui"
   },
   "private": true,
   "engines": {

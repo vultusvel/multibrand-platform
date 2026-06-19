@@ -20,12 +20,13 @@ const preview: Preview = {
     },
   },
   decorators: [
-    // Brand switcher in the Storybook toolbar (wilko / Homebase / Bathstore)
+    // Brand switcher in the Storybook toolbar
     withThemeByClassName({
       themes: {
         wilko: 'theme-wilko',
         Homebase: 'theme-homebase',
         Bathstore: 'theme-bathstore',
+        'The Range': 'theme-the-range',
       },
       defaultTheme: 'wilko',
     }),

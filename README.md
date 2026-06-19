@@ -72,7 +72,7 @@ The app consumes the library via `import { Button } from '@multibrand-platform/u
 
 ## Common commands
 
-Run from the repo root.
+> All commands run from the **repo root** via `npx nx`. Direct `npm run dev` inside `apps/web` does not work — always use Nx.
 
 ### App (`@multibrand-platform/web`)
 
@@ -123,7 +123,8 @@ parent element:
 | --------- | ------------------ | --------- | --------- |
 | wilko     | `theme-wilko`      | `#9D0D26` | `#F6DA24` |
 | Homebase  | `theme-homebase`   | `#008C49` | `#EF7D24` |
-| Bathstore | `theme-bathstore`  | `#6F2AC0` | `#1A1A1A` |
+| Bathstore | `theme-bathstore`  | `#0DA0CC` | `#1A1A1A` |
+| The Range | `theme-the-range`  | `#F53E24` | `#2A2C6B` |
 
 Utilities like `bg-brand-primary` resolve to the active brand. In Storybook,
 switch brands from the toolbar; in the app the brand is set on `<html>` (default

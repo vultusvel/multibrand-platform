@@ -3,7 +3,7 @@ import Link from 'next/link';
 const brands = [
   { slug: 'wilko', name: 'Wilko', color: '#9d0d26', bg: '#fff5f5' },
   { slug: 'homebase', name: 'Homebase', color: '#008c49', bg: '#f0faf4' },
-  { slug: 'bathstore', name: 'Bathstore', color: '#6f2ac0', bg: '#f8f4ff' },
+  { slug: 'bathstore', name: 'Bathstore', color: '#0DA0CC', bg: '#f8f4ff' },
   { slug: 'the-range', name: 'The Range', color: '#f53e24', bg: '#fff8f7' },
 ];
 
