@@ -12,7 +12,6 @@ const config: StorybookConfig = {
     '@storybook/addon-links',
     '@storybook/addon-themes',
     '@storybook/addon-vitest',
-    '@chromatic-com/storybook',
   ],
   framework: {
     name: getAbsolutePath('@storybook/react-vite'),
