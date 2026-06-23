@@ -24,11 +24,16 @@ function FadeDemo({ duration, easing }: Args) {
     el.textContent = `
       @keyframes _vt-fade-out { to   { opacity: 0; } }
       @keyframes _vt-fade-in  { from { opacity: 0; } }
-      ::view-transition-old(root) { animation: ${duration}ms ${easing} both _vt-fade-out; }
-      ::view-transition-new(root) { animation: ${duration}ms ${easing} both _vt-fade-in;  }
+      ::view-transition-old(root) { animation: var(--vt-fade-dur) var(--vt-fade-ease) both _vt-fade-out; }
+      ::view-transition-new(root) { animation: var(--vt-fade-dur) var(--vt-fade-ease) both _vt-fade-in;  }
     `;
     document.head.appendChild(el);
     return () => el.remove();
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--vt-fade-dur',  `${duration}ms`);
+    document.documentElement.style.setProperty('--vt-fade-ease', easing);
   }, [duration, easing]);
 
   const nav = (fn: () => void) => startVT(fn);

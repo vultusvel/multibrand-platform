@@ -17,41 +17,31 @@ function SharedElementDemo({ duration, easing }: Args) {
       @keyframes _vt-fade-in  { from { opacity: 0; } }
       @keyframes _vt-fade-out { to   { opacity: 0; } }
 
-      /* Suppress the default full-page cross-fade so only the shared element morphs */
-      ::view-transition-old(root) {
-        animation: ${duration * 0.6}ms ease both _vt-fade-out;
-      }
-      ::view-transition-new(root) {
-        animation: ${duration * 0.6}ms ease ${duration * 0.2}ms both _vt-fade-in;
-      }
+      ::view-transition-old(root) { animation: var(--vt-shared-root-dur) ease both _vt-fade-out; }
+      ::view-transition-new(root) { animation: var(--vt-shared-root-dur) ease var(--vt-shared-root-delay) both _vt-fade-in; }
 
-      /* The named view-transition groups (brand cards) morph with custom timing */
       ::view-transition-group(*) {
-        animation-duration: ${duration}ms;
-        animation-timing-function: ${easing};
+        animation-duration: var(--vt-shared-dur);
+        animation-timing-function: var(--vt-shared-ease);
       }
+      ::view-transition-image-pair(*) { isolation: isolate; }
+      ::view-transition-old(*) { animation: var(--vt-shared-el-dur) ease both _vt-fade-out; }
+      ::view-transition-new(*) { animation: var(--vt-shared-el-dur) ease var(--vt-shared-el-delay) both _vt-fade-in; }
 
-      /* Smooth the cross-dissolve between old/new snapshots of the morphing element */
-      ::view-transition-image-pair(*) {
-        isolation: isolate;
-      }
-      ::view-transition-old(*) {
-        animation: ${Math.round(duration * 0.4)}ms ease both _vt-fade-out;
-      }
-      ::view-transition-new(*) {
-        animation: ${Math.round(duration * 0.4)}ms ease ${Math.round(duration * 0.6)}ms both _vt-fade-in;
-      }
-
-      /* Re-apply root rules so they're not overridden by the * rules above */
-      ::view-transition-old(root) {
-        animation: ${duration * 0.6}ms ease both _vt-fade-out;
-      }
-      ::view-transition-new(root) {
-        animation: ${duration * 0.6}ms ease ${duration * 0.2}ms both _vt-fade-in;
-      }
+      ::view-transition-old(root) { animation: var(--vt-shared-root-dur) ease both _vt-fade-out; }
+      ::view-transition-new(root) { animation: var(--vt-shared-root-dur) ease var(--vt-shared-root-delay) both _vt-fade-in; }
     `;
     document.head.appendChild(el);
     return () => el.remove();
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--vt-shared-dur',        `${duration}ms`);
+    document.documentElement.style.setProperty('--vt-shared-ease',        easing);
+    document.documentElement.style.setProperty('--vt-shared-root-dur',   `${duration * 0.6}ms`);
+    document.documentElement.style.setProperty('--vt-shared-root-delay', `${duration * 0.2}ms`);
+    document.documentElement.style.setProperty('--vt-shared-el-dur',     `${Math.round(duration * 0.4)}ms`);
+    document.documentElement.style.setProperty('--vt-shared-el-delay',   `${Math.round(duration * 0.6)}ms`);
   }, [duration, easing]);
 
   const nav = (fn: () => void) => startVT(fn);

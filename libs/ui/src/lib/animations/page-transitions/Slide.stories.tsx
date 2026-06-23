@@ -29,43 +29,38 @@ function SlideDemo({ duration, easing, axis }: Args) {
   axisRef.current = axis;
 
   useEffect(() => {
-    const px = axis === 'horizontal' ? '100%' : '0';
-    const py = axis === 'vertical' ? '60px' : '0';
     const el = document.createElement('style');
     el.dataset.vtId = 'slide';
     el.textContent = `
-      @keyframes _vt-slide-out-fwd {
-        to { transform: translate(${axis === 'horizontal' ? '-' : ''}${px}, ${axis === 'vertical' ? '-' : ''}${py}); opacity: 0.3; }
-      }
-      @keyframes _vt-slide-in-fwd {
-        from { transform: translate(${px}, ${py}); opacity: 0.3; }
-      }
-      @keyframes _vt-slide-out-back {
-        to { transform: translate(${px}, ${py}); opacity: 0.3; }
-      }
-      @keyframes _vt-slide-in-back {
-        from { transform: translate(${axis === 'horizontal' ? '-' : ''}${px}, ${axis === 'vertical' ? '-' : ''}${py}); opacity: 0.3; }
-      }
+      @keyframes _vt-slide-out-fwd  { to   { transform: var(--vt-slide-tfm-out-fwd);  opacity: 0.3; } }
+      @keyframes _vt-slide-in-fwd   { from { transform: var(--vt-slide-tfm-in-fwd);   opacity: 0.3; } }
+      @keyframes _vt-slide-out-back { to   { transform: var(--vt-slide-tfm-out-back); opacity: 0.3; } }
+      @keyframes _vt-slide-in-back  { from { transform: var(--vt-slide-tfm-in-back);  opacity: 0.3; } }
 
-      :root[data-slide-dir="forward"] ::view-transition-old(root) {
-        animation: ${duration}ms ${easing} both _vt-slide-out-fwd;
-      }
-      :root[data-slide-dir="forward"] ::view-transition-new(root) {
-        animation: ${duration}ms ${easing} both _vt-slide-in-fwd;
-      }
-      :root[data-slide-dir="back"] ::view-transition-old(root) {
-        animation: ${duration}ms ${easing} both _vt-slide-out-back;
-      }
-      :root[data-slide-dir="back"] ::view-transition-new(root) {
-        animation: ${duration}ms ${easing} both _vt-slide-in-back;
-      }
+      :root[data-slide-dir="forward"] ::view-transition-old(root) { animation: var(--vt-slide-dur) var(--vt-slide-ease) both _vt-slide-out-fwd; }
+      :root[data-slide-dir="forward"] ::view-transition-new(root) { animation: var(--vt-slide-dur) var(--vt-slide-ease) both _vt-slide-in-fwd; }
+      :root[data-slide-dir="back"]    ::view-transition-old(root) { animation: var(--vt-slide-dur) var(--vt-slide-ease) both _vt-slide-out-back; }
+      :root[data-slide-dir="back"]    ::view-transition-new(root) { animation: var(--vt-slide-dur) var(--vt-slide-ease) both _vt-slide-in-back; }
 
-      /* Fallback when no direction set */
-      ::view-transition-old(root) { animation: ${duration}ms ${easing} both _vt-slide-out-fwd; }
-      ::view-transition-new(root) { animation: ${duration}ms ${easing} both _vt-slide-in-fwd; }
+      ::view-transition-old(root) { animation: var(--vt-slide-dur) var(--vt-slide-ease) both _vt-slide-out-fwd; }
+      ::view-transition-new(root) { animation: var(--vt-slide-dur) var(--vt-slide-ease) both _vt-slide-in-fwd; }
     `;
     document.head.appendChild(el);
     return () => el.remove();
+  }, []);
+
+  useEffect(() => {
+    const px = axis === 'horizontal' ? '100%' : '0';
+    const py = axis === 'vertical' ? '60px' : '0';
+    
+    const neg = (v: string) => (v === '0' ? '0' : `-${v}`);
+
+    document.documentElement.style.setProperty('--vt-slide-dur',           `${duration}ms`);
+    document.documentElement.style.setProperty('--vt-slide-ease',           easing);
+    document.documentElement.style.setProperty('--vt-slide-tfm-out-fwd',  `translate(${axis === 'horizontal' ? neg(px) : px}, ${axis === 'vertical' ? neg(py) : py})`);
+    document.documentElement.style.setProperty('--vt-slide-tfm-in-fwd',   `translate(${px}, ${py})`);
+    document.documentElement.style.setProperty('--vt-slide-tfm-out-back', `translate(${px}, ${py})`);
+    document.documentElement.style.setProperty('--vt-slide-tfm-in-back',  `translate(${axis === 'horizontal' ? neg(px) : px}, ${axis === 'vertical' ? neg(py) : py})`);
   }, [duration, easing, axis]);
 
   const navTo = (fn: () => void, dir: 'forward' | 'back') => {
