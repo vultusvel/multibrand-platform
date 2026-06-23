@@ -2,13 +2,49 @@ import { Suspense, ViewTransition } from 'react';
 import { notFound } from 'next/navigation';
 import { NavLink } from '../nav-link';
 import { ShopNowButton } from './ShopNowButton';
+import { getBrandBySlug, getBrands } from '@/lib/contentful/queries';
 
-const brands: Record<string, { name: string; primary: string; secondary: string }> = {
-  wilko:      { name: 'Wilko',      primary: '#9d2235', secondary: '#fdda24' },
-  homebase:   { name: 'Homebase',   primary: '#089c49', secondary: '#ec7224' },
-  bathstore:  { name: 'Bathstore',  primary: '#0da0cc', secondary: '#2d2d2d' },
-  'the-range':{ name: 'The Range',  primary: '#f53e24', secondary: '#2a2c6b' },
+export async function generateStaticParams() {
+  const fallback = [
+    { brand: 'wilko' },
+    { brand: 'homebase' },
+    { brand: 'bathstore' },
+    { brand: 'the-range' },
+  ];
+  if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_ACCESS_TOKEN) {
+    return fallback;
+  }
+  try {
+    const brands = await getBrands();
+    return brands.length ? brands.map(b => ({ brand: b.slug })) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+const FALLBACK: Record<string, { name: string; primary: string; secondary: string }> = {
+  wilko:       { name: 'Wilko',     primary: '#9d2235', secondary: '#fdda24' },
+  homebase:    { name: 'Homebase',  primary: '#089c49', secondary: '#ec7224' },
+  bathstore:   { name: 'Bathstore', primary: '#0da0cc', secondary: '#2d2d2d' },
+  'the-range': { name: 'The Range', primary: '#f53e24', secondary: '#2a2c6b' },
 };
+
+async function fetchBrand(slug: string) {
+  if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_ACCESS_TOKEN) {
+    return FALLBACK[slug] ?? null;
+  }
+  try {
+    const entry = await getBrandBySlug(slug);
+    if (!entry) return FALLBACK[slug] ?? null;
+    return {
+      name:      entry.name,
+      primary:   entry.color,
+      secondary: entry.backgroundColor,
+    };
+  } catch {
+    return FALLBACK[slug] ?? null;
+  }
+}
 
 function CardsSkeleton() {
   return (
@@ -39,19 +75,19 @@ export default async function BrandPage({
   params,
   searchParams,
 }: {
-  params: Promise<{ brand: string }>;
+  params:       Promise<{ brand: string }>;
   searchParams: Promise<{ error?: string }>;
 }) {
   const { brand } = await params;
-  const { error } = await searchParams;
-  const config = brands[brand];
+  const { error }  = await searchParams;
+
+  const config = await fetchBrand(brand);
   if (!config) notFound();
 
   if (error === 'true') throw new Error(`Test error: failed to load ${config.name}.`);
 
   return (
     <main style={{ minHeight: '100vh', background: '#f5f5f5', fontFamily: 'system-ui,sans-serif' }}>
-      {/* Morph: matches brand-card-{brand} on home page */}
       <ViewTransition name={`brand-card-${brand}`}>
         <header style={{ background: config.primary, padding: '18px 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <span style={{ color: '#fff', fontWeight: 800, fontSize: 20 }}>{config.name}</span>
@@ -62,7 +98,9 @@ export default async function BrandPage({
       </ViewTransition>
 
       <section style={{ background: config.secondary, padding: '48px 40px', textAlign: 'center' }}>
-        <h1 style={{ color: '#fff', fontSize: 32, fontWeight: 700, margin: '0 0 24px' }}>Welcome to {config.name}</h1>
+        <h1 style={{ color: '#fff', fontSize: 32, fontWeight: 700, margin: '0 0 24px' }}>
+          Welcome to {config.name}
+        </h1>
         <ShopNowButton primary={config.primary} />
       </section>
 
