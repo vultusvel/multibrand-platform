@@ -13,11 +13,11 @@ const ITEMS = [
   { id: 1, brand: BRANDS[0], label: 'New Arrivals',  count: 128 },
   { id: 2, brand: BRANDS[1], label: 'Best Sellers',  count: 84  },
   { id: 3, brand: BRANDS[2], label: 'Sale Items',    count: 212 },
-  { id: 4, brand: BRANDS[3], label: 'Collections',   count: 56  },
-  { id: 5, brand: BRANDS[0], label: 'Clearance',     count: 44  },
-  { id: 6, brand: BRANDS[1], label: 'New Season',    count: 97  },
-  { id: 7, brand: BRANDS[2], label: 'Trending',      count: 33  },
-  { id: 8, brand: BRANDS[3], label: 'Editor Picks',  count: 19  },
+  { id: 4, brand: BRANDS[0], label: 'Collections',   count: 56  },
+  { id: 5, brand: BRANDS[1], label: 'Clearance',     count: 44  },
+  { id: 6, brand: BRANDS[2], label: 'New Season',    count: 97  },
+  { id: 7, brand: BRANDS[0], label: 'Trending',      count: 33  },
+  { id: 8, brand: BRANDS[1], label: 'Editor Picks',  count: 19  },
 ];
 
 const TRANSLATE: Record<string, string> = {
@@ -73,13 +73,13 @@ function StaggeredListDemo({ duration, stagger, direction, distance }: Args) {
               boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
             } as React.CSSProperties}
           >
-            <div style={{ height: 6, background: item.brand.color }} />
+            <div style={{ height: 6, background: item.brand?.color }} />
             <div style={{ padding: '14px 16px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                <span style={{ width: 24, height: 24, borderRadius: '50%', background: item.brand.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 11, fontWeight: 700, flexShrink: 0 }}>
-                  {item.brand.initial}
+                <span style={{ width: 24, height: 24, borderRadius: '50%', background: item.brand?.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 11, fontWeight: 700, flexShrink: 0 }}>
+                  {item.brand?.initial}
                 </span>
-                <span style={{ fontSize: 11, color: '#aaa' }}>{item.brand.name}</span>
+                <span style={{ fontSize: 11, color: '#aaa' }}>{item.brand?.name}</span>
               </div>
               <div style={{ fontWeight: 600, fontSize: 14, color: '#1a1a1a', marginBottom: 4 }}>{item.label}</div>
               <div style={{ fontSize: 12, color: '#999' }}>{item.count} items</div>

@@ -9,11 +9,11 @@ interface Args {
 }
 
 const PRODUCTS = [
-  { id: 1, title: '6-Seater Garden Dining Set', price: '£499.99', was: '£699.99', brand: BRANDS[3], img: '🪑', badge: 'New' },
+  { id: 1, title: '6-Seater Garden Dining Set', price: '£499.99', was: '£699.99', brand: BRANDS[2], img: '🪑', badge: 'New' },
   { id: 2, title: 'Premium Storage Box 120L',   price: '£34.99',  was: null,       brand: BRANDS[0], img: '📦', badge: 'Best Seller' },
   { id: 3, title: 'Mosaic Bistro Table & Chairs',price: '£149.00', was: '£199.00', brand: BRANDS[1], img: '☕', badge: 'Sale' },
-  { id: 4, title: 'Luxury Bath Towel Set',       price: '£39.99',  was: null,       brand: BRANDS[2], img: '🛁', badge: 'New' },
-  { id: 5, title: 'LED Solar Garden Lights x10', price: '£19.99',  was: '£29.99',  brand: BRANDS[3], img: '💡', badge: 'Sale' },
+  { id: 4, title: 'Luxury Bath Towel Set',       price: '£39.99',  was: null,       brand: BRANDS[1], img: '🛁', badge: 'New' },
+  { id: 5, title: 'LED Solar Garden Lights x10', price: '£19.99',  was: '£29.99',  brand: BRANDS[2], img: '💡', badge: 'Sale' },
   { id: 6, title: 'Heavy Duty Shelf Unit 5-Tier',price: '£69.99',  was: null,       brand: BRANDS[0], img: '🗄️', badge: null },
 ];
 
@@ -36,7 +36,7 @@ function AddToBasketDemo({ duration, easing, from }: Args) {
       @keyframes _vt-atb-out { to   { transform: var(--vt-atb-tfm); } }
       @keyframes _vt-atb-backdrop-in  { from { opacity: 0; } }
       @keyframes _vt-atb-backdrop-out { to   { opacity: 0; } }
-      
+
       ::view-transition-new(atb-panel)    { animation: var(--vt-atb-dur) var(--vt-atb-ease) both _vt-atb-in; }
       ::view-transition-old(atb-panel)    { animation: var(--vt-atb-dur) var(--vt-atb-ease) both _vt-atb-out; }
       ::view-transition-new(atb-backdrop) { animation: var(--vt-atb-dur) ease both _vt-atb-backdrop-in; }
@@ -67,7 +67,6 @@ function AddToBasketDemo({ duration, easing, from }: Args) {
     <div style={{ fontFamily: 'system-ui, sans-serif', minHeight: 520, background: '#f5f5f5', position: 'relative', overflow: 'hidden' }}>
       {!supportsVT && <UnsupportedBanner />}
 
-      {/* Page header */}
       <div style={{ background: '#1a1a1a', padding: '14px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <span style={{ color: '#fff', fontWeight: 700, fontSize: 16 }}>The Range</span>
         <div style={{ display: 'flex', gap: 20, fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>
@@ -90,7 +89,7 @@ function AddToBasketDemo({ duration, easing, from }: Args) {
       <div style={{ padding: '20px 24px', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
         {PRODUCTS.map(p => (
           <div key={p.id} style={{ background: '#fff', borderRadius: 8, overflow: 'hidden', boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}>
-            <div style={{ background: p.brand.bg, height: 130, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 44, position: 'relative' }}>
+            <div style={{ background: p.brand?.bg, height: 130, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 44, position: 'relative' }}>
               {p.img}
               {p.badge && (
                 <span style={{ position: 'absolute', top: 8, left: 8, background: p.badge === 'Sale' ? '#e74c3c' : p.badge === 'Best Seller' ? '#f39c12' : '#27ae60', color: '#fff', fontSize: 10, fontWeight: 700, padding: '2px 7px', borderRadius: 3 }}>
@@ -158,12 +157,12 @@ function AddToBasketDemo({ duration, easing, from }: Args) {
 
           <div style={{ padding: '20px 20px 0' }}>
             <div style={{ display: 'flex', gap: 14, marginBottom: 20 }}>
-              <div style={{ width: 80, height: 80, background: basket.brand.bg, borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 32, flexShrink: 0 }}>
+              <div style={{ width: 80, height: 80, background: basket.brand?.bg, borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 32, flexShrink: 0 }}>
                 {basket.img}
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 14, fontWeight: 600, color: '#1a1a1a', marginBottom: 4, lineHeight: 1.35 }}>{basket.title}</div>
-                <div style={{ fontSize: 12, color: '#999', marginBottom: 10 }}>{basket.brand.name}</div>
+                <div style={{ fontSize: 12, color: '#999', marginBottom: 10 }}>{basket.brand?.name}</div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <select style={{ fontSize: 13, border: '1px solid #ddd', borderRadius: 4, padding: '4px 8px' }}>
                     <option>1</option><option>2</option><option>3</option>
