@@ -231,7 +231,7 @@ export const Progress: Story = {
 };
 
 export const Dots: Story = {
-  name: 'Dots — bouncing (Bathstore)',
+  name: 'Dots — bouncing',
   parameters: { docs: { description: { story: '**Best for:** Search, auto-save, background data fetch. Friendly and lightweight — less urgent than a spinner.' } } },
   render: () => <DemoShell label="Click to trigger"><DotsBtn /></DemoShell>,
 };

@@ -175,8 +175,7 @@ function LinksDemo({ duration, color, thickness }: Args) {
         <p style={{ fontSize: 14, color: '#333', lineHeight: 1.8, margin: 0 }}>
           Browse our full range at{' '}
           <SlideUnderLink label="Wilko" color="#9d2235" duration={duration} thickness={thickness} />,{' '}
-          <SlideUnderLink label="Homebase" color="#089c49" duration={duration} thickness={thickness} />,{' '}
-          <SlideUnderLink label="Bathstore" color="#0da0cc" duration={duration} thickness={thickness} /> and{' '}
+          <SlideUnderLink label="Homebase" color="#089c49" duration={duration} thickness={thickness} /> and{' '}
           <SlideUnderLink label="The Range" color="#f53e24" duration={duration} thickness={thickness} />.
           {' '}<ArrowLink label="View all brands" color="#1a1a1a" duration={duration} />
         </p>

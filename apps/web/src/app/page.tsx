@@ -5,7 +5,6 @@ import { getBrands } from '@/lib/contentful/queries';
 const FALLBACK_BRANDS = [
   { slug: 'wilko',     name: 'Wilko',     color: '#9d2235', bg: '#fff5f5' },
   { slug: 'homebase',  name: 'Homebase',  color: '#089c49', bg: '#f0faf4' },
-  { slug: 'bathstore', name: 'Bathstore', color: '#0da0cc', bg: '#f0f8ff' },
   { slug: 'the-range', name: 'The Range', color: '#f53e24', bg: '#fff8f7' },
 ];
 

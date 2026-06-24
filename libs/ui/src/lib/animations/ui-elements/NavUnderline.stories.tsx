@@ -15,7 +15,7 @@ const BRAND_MAP: Record<string, { color: string; bg: string }> = {
   'All Brands': { color: '#1a1a1a', bg: '#f5f5f5' },
   'Wilko':      { color: '#9d2235', bg: '#fff5f5' },
   'Homebase':   { color: '#089c49', bg: '#f0faf4' },
-  'Bathstore':  { color: '#0da0cc', bg: '#f0f8ff' },
+
   'The Range':  { color: '#f53e24', bg: '#fff8f7' },
 };
 
@@ -49,10 +49,9 @@ function NavUnderlineDemo({ duration, easing, underlineHeight, underlineColor }:
   const displayColor = underlineColor === 'brand' ? color : underlineColor;
 
   const CONTENT: Record<string, string[]> = {
-    'All Brands':  ['Wilko', 'Homebase', 'Bathstore', 'The Range'],
+    'All Brands':  ['Wilko', 'Homebase', 'The Range'],
     'Wilko':       ['Garden Tools', 'Home Decor', 'Cleaning', 'Storage'],
     'Homebase':    ['Paints', 'Flooring', 'Kitchens', 'Bathrooms'],
-    'Bathstore':   ['Showers', 'Baths', 'Taps', 'Tiles'],
     'The Range':   ['Furniture', 'Lighting', 'Art', 'Crafts'],
   };
 

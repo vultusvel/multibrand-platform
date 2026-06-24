@@ -8,7 +8,6 @@ export async function generateStaticParams() {
   const fallback = [
     { brand: 'wilko' },
     { brand: 'homebase' },
-    { brand: 'bathstore' },
     { brand: 'the-range' },
   ];
   if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_ACCESS_TOKEN) {
@@ -25,7 +24,6 @@ export async function generateStaticParams() {
 const FALLBACK: Record<string, { name: string; primary: string; secondary: string }> = {
   wilko:       { name: 'Wilko',     primary: '#9d2235', secondary: '#fdda24' },
   homebase:    { name: 'Homebase',  primary: '#089c49', secondary: '#ec7224' },
-  bathstore:   { name: 'Bathstore', primary: '#0da0cc', secondary: '#2d2d2d' },
   'the-range': { name: 'The Range', primary: '#f53e24', secondary: '#2a2c6b' },
 };
 

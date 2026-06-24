@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 const brands = [
   { name: 'wilko', label: 'wilko.com', theme: 'theme-wilko' },
   { name: 'homebase', label: 'Homebase', theme: 'theme-homebase' },
-  { name: 'bathstore', label: 'Bathstore', theme: 'theme-bathstore' },
+
   { name: 'the-range', label: 'The Range', theme: 'theme-the-range' },
 ];
 
