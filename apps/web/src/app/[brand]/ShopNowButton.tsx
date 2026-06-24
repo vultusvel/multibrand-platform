@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 type State = 'idle' | 'loading' | 'success';
 
-export function ShopNowButton({ primary }: { primary: string }) {
+export function ShopNowButton() {
   const [state, setState] = useState<State>('idle');
 
   const handleClick = async () => {
@@ -23,8 +23,8 @@ export function ShopNowButton({ primary }: { primary: string }) {
 
   const bg =
     state === 'success' ? '#2ecc71' :
-    state === 'loading' ? `${primary}bb` :
-                          primary;
+    state === 'loading' ? 'color-mix(in srgb, var(--brand-primary), transparent 27%)' :
+                          'var(--brand-primary)';
 
   return (
     <button

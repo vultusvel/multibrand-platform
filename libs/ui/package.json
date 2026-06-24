@@ -10,6 +10,11 @@
       "default": "./src/index.ts"
     },
     "./theme.css": "./src/styles/theme.css",
+    "./themes": {
+      "types":   "./src/themes/index.ts",
+      "import":  "./src/themes/index.ts",
+      "default": "./src/themes/index.ts"
+    },
     "./package.json": "./package.json"
   },
   "nx": {

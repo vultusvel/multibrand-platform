@@ -1,0 +1,9 @@
+{
+  "slug": "homebase",
+  "name": "Homebase",
+  "brandPrimary":   "#089c49",
+  "brandSecondary": "#ec7224",
+  "statusNew":      "#fb610b",
+  "statusRatings":  "#fb610b",
+  "statusSale":     "#ee0000"
+}

@@ -17,7 +17,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@multibrand-platform/ui/themes": ["../../libs/ui/src/themes/index.ts"]
     },
     "types": ["node"],
     "outDir": "dist",

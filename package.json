@@ -12,9 +12,11 @@
     "node": ">=24"
   },
   "dependencies": {
+    "@vercel/edge-config": "^1.4.3",
     "next": "~16.1.6",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@babel/core": "^7.14.5",

@@ -54,13 +54,13 @@ function CardsSkeleton() {
   );
 }
 
-async function Cards({ primary }: { primary: string }) {
+async function Cards() {
   await new Promise((r) => setTimeout(r, 700));
   return (
     <ViewTransition enter="slide-up" default="none">
       <div style={{ padding: 40, display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
         {['New Arrivals', 'Best Sellers', 'Sale'].map((label) => (
-          <div key={label} style={{ background: '#fff', borderRadius: 10, padding: 24, borderTop: `3px solid ${primary}` }}>
+          <div key={label} style={{ background: '#fff', borderRadius: 10, padding: 24, borderTop: '3px solid var(--brand-primary)' }}>
             <p style={{ margin: 0, fontWeight: 600, color: '#1a1a1a' }}>{label}</p>
           </div>
         ))}
@@ -87,7 +87,7 @@ export default async function BrandPage({
   return (
     <main style={{ minHeight: '100vh', background: '#f5f5f5', fontFamily: 'system-ui,sans-serif' }}>
       <ViewTransition name={`brand-card-${brand}`}>
-        <header style={{ background: config.primary, padding: '18px 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <header style={{ background: 'var(--brand-primary)', padding: '18px 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <span style={{ color: '#fff', fontWeight: 800, fontSize: 20 }}>{config.name}</span>
           <NavLink href="/" transitionTypes={['nav-back']} style={{ color: '#fff', fontSize: 13, textDecoration: 'none', background: 'rgba(255,255,255,0.18)', padding: '7px 14px', borderRadius: 6 }}>
             ← Back
@@ -95,15 +95,15 @@ export default async function BrandPage({
         </header>
       </ViewTransition>
 
-      <section style={{ background: config.secondary, padding: '48px 40px', textAlign: 'center' }}>
+      <section style={{ background: 'var(--brand-secondary)', padding: '48px 40px', textAlign: 'center' }}>
         <h1 style={{ color: '#fff', fontSize: 32, fontWeight: 700, margin: '0 0 24px' }}>
           Welcome to {config.name}
         </h1>
-        <ShopNowButton primary={config.primary} />
+        <ShopNowButton />
       </section>
 
       <Suspense fallback={<ViewTransition exit="slide-down"><CardsSkeleton /></ViewTransition>}>
-        <Cards primary={config.primary} />
+        <Cards />
       </Suspense>
     </main>
   );

@@ -1,0 +1,9 @@
+{
+  "slug": "wilko",
+  "name": "Wilko",
+  "brandPrimary":   "#9d2235",
+  "brandSecondary": "#fdda24",
+  "statusNew":      "#67a239",
+  "statusRatings":  "#f68d00",
+  "statusSale":     "#e41222"
+}
