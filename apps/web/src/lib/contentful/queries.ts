@@ -1,4 +1,4 @@
-import { contentfulClient } from './client';
+import { getContentfulClient } from './client';
 import type { Brand, Product, Banner } from './types';  
 
 function str(v: unknown): string {
@@ -21,7 +21,7 @@ function linkedSlug(v: unknown): string | null {
 }
 
 export async function getBrands(): Promise<Brand[]> {
-  const res = await contentfulClient.getEntries({
+  const res = await getContentfulClient().getEntries({
     content_type: 'brand',
     order:        ['fields.name'],
   });
@@ -37,7 +37,7 @@ export async function getBrands(): Promise<Brand[]> {
 }
 
 export async function getBrandBySlug(slug: string): Promise<Brand | null> {
-  const res = await contentfulClient.getEntries({
+  const res = await getContentfulClient().getEntries({
     content_type:  'brand',
     'fields.slug': slug,
     limit:         1,
@@ -56,7 +56,7 @@ export async function getBrandBySlug(slug: string): Promise<Brand | null> {
 }
 
 export async function getProducts(brandSlug?: string): Promise<Product[]> {
-  const res = await contentfulClient.getEntries({
+  const res = await getContentfulClient().getEntries({
     content_type:     'product',
     'fields.inStock': true,
     ...(brandSlug && { 'fields.brand.fields.slug[match]': brandSlug }),
@@ -80,7 +80,7 @@ export async function getProducts(brandSlug?: string): Promise<Product[]> {
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
-  const res = await contentfulClient.getEntries({
+  const res = await getContentfulClient().getEntries({
     content_type:  'product',
     'fields.slug': slug,
     limit:         1,
@@ -104,7 +104,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 }
 
 export async function getBanners(brandSlug?: string): Promise<Banner[]> {
-  const res = await contentfulClient.getEntries({
+  const res = await getContentfulClient().getEntries({
     content_type:    'banner',
     'fields.active': true,
     ...(brandSlug && { 'fields.brand.fields.slug[match]': brandSlug }),
