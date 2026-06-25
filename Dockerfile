@@ -16,6 +16,7 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
+RUN npx tsc -p libs/ui/tsconfig.lib.json
 RUN cd apps/web && npx next build
 
 FROM node:24-alpine AS runner

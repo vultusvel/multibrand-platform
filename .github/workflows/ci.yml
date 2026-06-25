@@ -21,6 +21,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Build libs/ui
+        run: npx tsc -p libs/ui/tsconfig.lib.json
+
       - name: TypeScript
         working-directory: apps/web
         run: npx tsc --noEmit
