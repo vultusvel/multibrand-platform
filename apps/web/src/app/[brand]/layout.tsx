@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react';
-import { cacheTag, cacheLife } from 'next/cache';
 import {
   LocalThemeSource,
   EdgeConfigThemeSource,
@@ -7,20 +6,12 @@ import {
   tokensToCSS,
 } from '@multibrand-platform/ui/themes';
 
+export const dynamic = 'force-dynamic';
+
 function makeSource() {
   if (process.env.EDGE_CONFIG) return new EdgeConfigThemeSource();
   if (process.env.CONTENTFUL_SPACE_ID) return new ContentfulThemeSource();
   return new LocalThemeSource();
-}
-
-const source = makeSource();
-
-async function getCachedBrand(slug: string) {
-  'use cache';
-  cacheTag('brand-theme');
-  cacheLife('minutes');
-  
-  return source.getBrand(slug);
 }
 
 export default async function BrandLayout({
@@ -31,7 +22,7 @@ export default async function BrandLayout({
   params: Promise<{ brand: string }>;
 }) {
   const { brand } = await params;
-  const tokens = await getCachedBrand(brand);
+  const tokens = await makeSource().getBrand(brand);
   const css = tokens ? tokensToCSS(tokens) : null;
 
   return (
