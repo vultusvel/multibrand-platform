@@ -28,7 +28,8 @@ export class ContentfulThemeSource implements ThemeSource {
         return null;
       }
       return result.data;
-    } catch {
+    } catch (err) {
+      console.error('[ContentfulThemeSource] getBrand error:', err);
       return null;
     }
   }
