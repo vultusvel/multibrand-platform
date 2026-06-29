@@ -3,6 +3,7 @@ const nextConfig = {
   output: 'standalone',
   experimental: {
     viewTransition: true,
+    cacheComponents: true,
   },
   transpilePackages: ['@multibrand-platform/ui'],
   images: {
