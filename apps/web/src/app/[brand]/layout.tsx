@@ -6,8 +6,6 @@ import {
   tokensToCSS,
 } from '@multibrand-platform/ui/themes';
 
-export const dynamic = 'force-dynamic';
-
 function makeSource() {
   if (process.env.EDGE_CONFIG) return new EdgeConfigThemeSource();
   if (process.env.CONTENTFUL_SPACE_ID) return new ContentfulThemeSource();
