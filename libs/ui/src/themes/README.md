@@ -2,7 +2,10 @@
 
 Brand colour tokens live outside the codebase. Changing a colour requires no code change and no redeploy.
 
-Active source is chosen at runtime: `EDGE_CONFIG` env var present → Edge Config, otherwise → Local JSON.
+Active source is chosen at runtime:
+- `EDGE_CONFIG` set → Edge Config
+- `CONTENTFUL_SPACE_ID` set → Contentful
+- otherwise → Local JSON
 
 ## File structure
 
@@ -16,10 +19,21 @@ libs/ui/src/themes/
     types.ts          ThemeSource interface
     local.ts          LocalThemeSource
     edge-config.ts    EdgeConfigThemeSource
+    contentful.ts     ContentfulThemeSource
 
 apps/web/src/app/[brand]/
   layout.tsx          Injects <style> with CSS vars at SSR
+apps/web/src/app/api/revalidate/
+  route.ts            Webhook → revalidateTag('brand-theme')
 ```
+
+## Phases
+
+| Phase | Source             | Status  |
+|-------|--------------------|---------|
+| 0     | Local JSON         | ✅ done |
+| 1     | Vercel Edge Config | ✅ done |
+| 2     | Contentful         | ✅ done |
 
 ## Token schema
 
@@ -54,10 +68,47 @@ node --env-file=.env.local scripts/seed-edge-config.mjs
 
 ### Required env vars
 
-| Variable       | Where                                          |
-|----------------|------------------------------------------------|
+| Variable       | Where                                            |
+|----------------|--------------------------------------------------|
 | `EDGE_CONFIG`  | Auto-added by `vercel env pull` after connecting |
-| `VERCEL_TOKEN` | Vercel Dashboard → Account Settings → Tokens   |
+| `VERCEL_TOKEN` | Vercel Dashboard → Account Settings → Tokens     |
+
+## Phase 2 — Contentful
+
+### Content model `brandTheme`
+
+Create in Contentful UI with these fields (all Short text):
+
+| Field            | Required |
+|------------------|----------|
+| `slug`           | ✅       |
+| `name`           | ✅       |
+| `brandPrimary`   | ✅       |
+| `brandSecondary` | ✅       |
+| `statusNew`      | ✅       |
+| `statusRatings`  | ✅       |
+| `statusSale`     | ✅       |
+
+### Update a colour (no redeploy)
+
+1. Edit the `brandTheme` entry in Contentful
+2. Click **Publish**
+3. Contentful fires the webhook → `POST /api/revalidate?secret=…`
+4. `revalidateTag('brand-theme', 'max')` clears the cache
+5. Next request fetches fresh data from Contentful
+
+### Webhook setup in Contentful
+
+URL: `https://your-domain.com/api/revalidate?secret=YOUR_REVALIDATE_SECRET`
+Trigger: Entry published, Content type: `brandTheme`
+
+### Required env vars
+
+| Variable             | Where                              |
+|----------------------|------------------------------------|
+| `CONTENTFUL_SPACE_ID`    | Contentful → Settings → API keys |
+| `CONTENTFUL_ACCESS_TOKEN`| Contentful → Settings → API keys |
+| `REVALIDATE_SECRET`      | Any random string, also in webhook URL |
 
 ## Adding a new brand (Local JSON)
 
@@ -65,8 +116,11 @@ node --env-file=.env.local scripts/seed-edge-config.mjs
 2. Register in `adapters/local.ts`
 3. Add fallback in `apps/web/src/app/page.tsx` and `[brand]/page.tsx`
 
-## Phase 2 — Contentful (planned)
+## Trade-offs
 
-Content model `brandTheme` with fields: `slug`, `name`, `brandPrimary`, `brandSecondary`, `statusNew`, `statusRatings`, `statusSale`.
-
-Publish webhook → `POST /api/revalidate?tag=brand-theme` → `revalidateTag()` → live update.
+|                 | Local JSON  | Edge Config          | Contentful           |
+|-----------------|-------------|----------------------|----------------------|
+| Editing UI      | code only   | Vercel dashboard     | rich editor + roles  |
+| Update speed    | rebuild     | instant              | instant + webhook    |
+| Change history  | git log     | none                 | entry history        |
+| Setup cost      | zero        | free (8 KB tier)     | Contentful account   |
