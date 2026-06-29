@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  cacheComponents: true,
   experimental: {
     viewTransition: true,
-    cacheComponents: true,
   },
   transpilePackages: ['@multibrand-platform/ui'],
   images: {
