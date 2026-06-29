@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { unstable_cache } from 'next/cache';
+import { cacheTag, cacheLife } from 'next/cache';
 import {
   LocalThemeSource,
   EdgeConfigThemeSource,
@@ -15,11 +15,13 @@ function makeSource() {
 
 const source = makeSource();
 
-const getCachedBrand = unstable_cache(
-  (slug: string) => source.getBrand(slug),
-  ['brand-theme'],
-  { tags: ['brand-theme'], revalidate: 60 },
-);
+async function getCachedBrand(slug: string) {
+  'use cache';
+  cacheTag('brand-theme');
+  cacheLife('minutes');
+  
+  return source.getBrand(slug);
+}
 
 export default async function BrandLayout({
   children,
