@@ -48,11 +48,18 @@ const THEMES = [
   },
 ];
 
-const items = THEMES.map(theme => ({
-  operation: 'upsert',
-  key:       `theme-${theme.slug}`,
-  value:     theme,
-}));
+const items = [
+  {
+    operation: 'upsert',
+    key:       'brand-slugs',
+    value:     THEMES.map(t => t.slug),
+  },
+  ...THEMES.map(theme => ({
+    operation: 'upsert',
+    key:       `theme-${theme.slug}`,
+    value:     theme,
+  })),
+];
 
 const res = await fetch(
   `https://api.vercel.com/v1/edge-config/${storeId}/items`,

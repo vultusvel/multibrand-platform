@@ -66,6 +66,12 @@ node --env-file=.env.local scripts/seed-edge-config.mjs
 3. Click **Save**
 4. Reload the brand page
 
+### Add a new brand (no code change)
+
+1. Add a new `theme-{slug}` item in Edge Config with the token values
+2. Add the slug to the `brand-slugs` array in Edge Config
+3. Open `/{slug}` — page appears immediately
+
 ### Required env vars
 
 | Variable       | Where                                            |
@@ -110,11 +116,21 @@ Trigger: Entry published, Content type: `brandTheme`
 | `CONTENTFUL_ACCESS_TOKEN`| Contentful → Settings → API keys |
 | `REVALIDATE_SECRET`      | Any random string, also in webhook URL |
 
-## Adding a new brand (Local JSON)
+## Adding a new brand
 
+**Contentful** (no code change):
+1. Content → Add entry → Brand Theme, fill all fields, Publish
+2. Open `/{slug}` — page appears immediately
+
+**Edge Config** (no code change):
+1. Add `theme-{slug}` item in Edge Config store
+2. Add the slug to the `brand-slugs` array
+3. Open `/{slug}` — page appears immediately
+
+**Local JSON** (requires code change):
 1. Create `libs/ui/src/themes/{slug}.json`
 2. Register in `adapters/local.ts`
-3. Add fallback in `apps/web/src/app/page.tsx` and `[brand]/page.tsx`
+3. Add fallback in `apps/web/src/app/page.tsx`
 
 ## Trade-offs
 

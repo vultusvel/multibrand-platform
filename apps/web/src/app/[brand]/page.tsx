@@ -2,46 +2,55 @@ import { Suspense, ViewTransition } from 'react';
 import { notFound } from 'next/navigation';
 import { NavLink } from '../nav-link';
 import { ShopNowButton } from './ShopNowButton';
-import { getBrandBySlug, getBrands } from '@/lib/contentful/queries';
+import {
+  LocalThemeSource,
+  EdgeConfigThemeSource,
+  ContentfulThemeSource,
+} from '@multibrand-platform/ui/themes';
 
-export async function generateStaticParams() {
-  const fallback = [
-    { brand: 'wilko' },
-    { brand: 'homebase' },
-    { brand: 'the-range' },
-  ];
-  if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_ACCESS_TOKEN) {
-    return fallback;
-  }
-  try {
-    const brands = await getBrands();
-    return brands.length ? brands.map(b => ({ brand: b.slug })) : fallback;
-  } catch {
-    return fallback;
-  }
+const STATIC_FALLBACK = [
+  { brand: 'wilko' },
+  { brand: 'homebase' },
+  { brand: 'the-range' },
+];
+
+function getThemeSource() {
+  if (process.env.EDGE_CONFIG) return new EdgeConfigThemeSource();
+
+  if (process.env.CONTENTFUL_SPACE_ID) return new ContentfulThemeSource();
+  
+  return new LocalThemeSource();
 }
 
-const FALLBACK: Record<string, { name: string; primary: string; secondary: string }> = {
-  wilko:       { name: 'Wilko',     primary: '#9d2235', secondary: '#fdda24' },
-  homebase:    { name: 'Homebase',  primary: '#089c49', secondary: '#ec7224' },
-  'the-range': { name: 'The Range', primary: '#f53e24', secondary: '#2a2c6b' },
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  try {
+    const brands = await getThemeSource().getAllBrands();
+
+    if (brands.length) return brands.map(b => ({ brand: b.slug }));
+  } catch { 
+    /* empty */ 
+  }
+  return STATIC_FALLBACK;
+}
+
+const FALLBACK: Record<string, string> = {
+  wilko:       'Wilko',
+  homebase:    'Homebase',
+  'the-range': 'The Range',
 };
 
-async function fetchBrand(slug: string) {
-  if (!process.env.CONTENTFUL_SPACE_ID || !process.env.CONTENTFUL_ACCESS_TOKEN) {
-    return FALLBACK[slug] ?? null;
-  }
+async function fetchBrandName(slug: string): Promise<string | null> {
   try {
-    const entry = await getBrandBySlug(slug);
-    if (!entry) return FALLBACK[slug] ?? null;
-    return {
-      name:      entry.name,
-      primary:   entry.color,
-      secondary: entry.backgroundColor,
-    };
-  } catch {
-    return FALLBACK[slug] ?? null;
+    const tokens = await getThemeSource().getBrand(slug);
+    
+    if (tokens) return tokens.name;
+  } catch { 
+    /* empty */ 
   }
+
+  return FALLBACK[slug] ?? null;
 }
 
 function CardsSkeleton() {
@@ -73,22 +82,22 @@ export default async function BrandPage({
   params,
   searchParams,
 }: {
-  params:       Promise<{ brand: string }>;
+  params: Promise<{ brand: string }>;
   searchParams: Promise<{ error?: string }>;
 }) {
   const { brand } = await params;
-  const { error }  = await searchParams;
+  const { error } = await searchParams;
 
-  const config = await fetchBrand(brand);
-  if (!config) notFound();
+  const name = await fetchBrandName(brand);
+  if (!name) notFound();
 
-  if (error === 'true') throw new Error(`Test error: failed to load ${config.name}.`);
+  if (error === 'true') throw new Error(`Test error: failed to load ${name}.`);
 
   return (
     <main style={{ minHeight: '100vh', background: '#f5f5f5', fontFamily: 'system-ui,sans-serif' }}>
       <ViewTransition name={`brand-card-${brand}`}>
         <header style={{ background: 'var(--brand-primary)', padding: '18px 40px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <span style={{ color: '#fff', fontWeight: 800, fontSize: 20 }}>{config.name}</span>
+          <span style={{ color: '#fff', fontWeight: 800, fontSize: 20 }}>{name}</span>
           <NavLink href="/" transitionTypes={['nav-back']} style={{ color: '#fff', fontSize: 13, textDecoration: 'none', background: 'rgba(255,255,255,0.18)', padding: '7px 14px', borderRadius: 6 }}>
             ← Back
           </NavLink>
@@ -97,7 +106,7 @@ export default async function BrandPage({
 
       <section style={{ background: 'var(--brand-secondary)', padding: '48px 40px', textAlign: 'center' }}>
         <h1 style={{ color: '#fff', fontSize: 32, fontWeight: 700, margin: '0 0 24px' }}>
-          Welcome to {config.name}
+          Welcome to {name}
         </h1>
         <ShopNowButton />
       </section>
