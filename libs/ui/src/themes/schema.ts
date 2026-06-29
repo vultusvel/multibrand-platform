@@ -8,9 +8,9 @@ export const BrandTokensSchema = z.object({
 
   brandPrimary:   hex,
   brandSecondary: hex,
-  statusNew:      hex,
-  statusRatings:  hex,
-  statusSale:     hex,
+  statusNew:      hex.optional(),
+  statusRatings:  hex.optional(),
+  statusSale:     hex.optional(),
 
   brandPrimaryAa:   hex.optional(),
   brandBlue:        hex.optional(),
